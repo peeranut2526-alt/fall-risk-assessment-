@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบประเมิน Fall Risk (MFS)</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Sarabun', sans-serif; padding: 15px; max-width: 500px; margin: auto; background-color: #f0f4f8; }
+        .card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        h2 { color: #1e3a8a; text-align: center; font-size: 20px; margin-top: 0; }
+        .question { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #334155; font-size: 14px; }
+        select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 14px; background-color: #fff; }
+        button { width: 100%; padding: 12px; background-color: #16a34a; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        button:hover { background-color: #15803d; }
+        #result { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; text-align: center; font-size: 16px; font-weight: bold; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>แบบประเมินความเสี่ยง Fall Risk (Morse Fall Scale)</h2>
+    
+    <div class="question">
+        <label>1. ประวัติการตกหกล้ม (ในช่วง 3 เดือน):</label>
+        <select id="q1">
+            <option value="0">ไม่มี (0 คะแนน)</option>
+            <option value="25">มี (25 คะแนน)</option>
+        </select>
+    </div>
+
+    <div class="question">
+        <label>2. การวินิจฉัยโรคมากกว่า 1 โรค:</label>
+        <select id="q2">
+            <option value="0">ไม่มี (0 คะแนน)</option>
+            <option value="15">มี (15 คะแนน)</option>
+        </select>
+    </div>
+
+    <div class="question">
+        <label>3. การใช้อุปกรณ์ช่วยเดิน:</label>
+        <select id="q3">
+            <option value="0">ไม่ใช้ / นอนเตียง / ใช้รถเข็น (0 คะแนน)</option>
+            <option value="15">ใช้ไม้เท้า / วอล์คเกอร์ / ไม้ค้ำยัน (15 คะแนน)</option>
+            <option value="30">เกาะเฟอร์นิเจอร์เดิน (30 คะแนน)</option>
+        </select>
+    </div>
+
+    <div class="question">
+        <label>4. มีการให้สารน้ำทางหลอดเลือดดำ (IV/Heparin Lock):</label>
+        <select id="q4">
+            <option value="0">ไม่มี (0 คะแนน)</option>
+            <option value="20">มี (20 คะแนน)</option>
+        </select>
+    </div>
+
+    <div class="question">
+        <label>5. ลักษณะการเดินและการทรงตัว:</label>
+        <select id="q5">
+            <option value="0">ปกติ / นอนเตียง (0 คะแนน)</option>
+            <option value="10">อ่อนแรง (10 คะแนน)</option>
+            <option value="20">บกพร่องอย่างมาก/ทรงตัวยาก (20 คะแนน)</option>
+        </select>
+    </div>
+
+    <div class="question">
+        <label>6. สภาพจิตใจ / การรับรู้:</label>
+        <select id="q6">
+            <option value="0">รู้ข้อจำกัดของตนเอง (0 คะแนน)</option>
+            <option value="15">สับสน / ประเมินความสามารถสูงเกินจริง (15 คะแนน)</option>
+        </select>
+    </div>
+
+    <button type="button" onclick="calculateRisk()">คำนวณระดับความเสี่ยง</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function calculateRisk() {
+    let score = Number(document.getElementById('q1').value) +
+                Number(document.getElementById('q2').value) +
+                Number(document.getElementById('q3').value) +
+                Number(document.getElementById('q4').value) +
+                Number(document.getElementById('q5').value) +
+                Number(document.getElementById('q6').value);
+
+    let resultDiv = document.getElementById('result');
+    resultDiv.style.display = 'block';
+
+    if (score >= 45) {
+        resultDiv.style.backgroundColor = '#fee2e2';
+        resultDiv.style.color = '#991b1b';
+        resultDiv.style.border = '1px solid #f87171';
+        resultDiv.innerHTML = `คะแนนรวม: ${score} คะแนน<br>ระดับความเสี่ยง: เสี่ยงสูงมาก (High Risk)`;
+    } else if (score >= 25) {
+        resultDiv.style.backgroundColor = '#fef3c7';
+        resultDiv.style.color = '#92400e';
+        resultDiv.style.border = '1px solid #fcd34d';
+        resultDiv.innerHTML = `คะแนนรวม: ${score} คะแนน<br>ระดับความเสี่ยง: เสี่ยงปานกลาง (Moderate Risk)`;
+    } else {
+        resultDiv.style.backgroundColor = '#dcfce7';
+        resultDiv.style.color = '#166534';
+        resultDiv.style.border = '1px solid #4ade80';
+        resultDiv.innerHTML = `คะแนนรวม: ${score} คะแนน<br>ระดับความเสี่ยง: เสี่ยงต่ำ / ปกติ (Low Risk)`;
+    }
+}
+</script>
+
+</body>
+</html>
 
